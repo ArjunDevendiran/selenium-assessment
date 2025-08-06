@@ -42,6 +42,9 @@ public class LoginPageInteraction {
       case "PASSWORD":
         eleLocator = loginPageModel.getPasswordField();
         break;
+      case "LOGIN":
+        eleLocator = loginPageModel.getLoginButton();
+        break;
       default:
         Log.error(String.format("Unknown element requested: %s", element));
         throw new IllegalArgumentException(String.format("Unknown element requested: %s", element));
@@ -79,15 +82,39 @@ public class LoginPageInteraction {
    */
   public void clickSubmitButton() {
     Log.debug("Clicking Submit button");
-    waitUtility.waitForElementToBeClickable(loginPageModel.getSubmitButton()).click();
+    waitUtility.waitForElementToBeClickable(loginPageModel.getLoginButton()).click();
     Log.info("Clicked Submit button");
   }
 
   /**
    * Getting logged in success message.
    */
-  public String getUserLoggedInMessage() {
+  public String getSuccessToastMessage() {
     Log.debug("Getting logged in success message");
-    return waitUtility.waitForElementToBeVisible(loginPageModel.getLoggedInPageElement()).getText().trim();
+    return waitUtility.waitForElementToBeVisible(loginPageModel.getSuccessToast()).getText().trim();
+  }
+
+  /**
+   * Getting error message.
+   */
+  public String getErrorMessage() {
+    Log.debug("Getting email error message");
+    return waitUtility.waitForElementToBeVisible(loginPageModel.getEmailErrorMessage()).getText().trim();
+  }
+
+  /**
+   * Getting page title for assertion.
+   */
+  public String getPageTitle() {
+    Log.debug("Getting page header text");
+    return driver.getTitle().trim();
+  }
+
+  /**
+   * Getting page header title for assertion.
+   */
+  public String getPageHeaderText() {
+    Log.debug("Getting page header text");
+    return waitUtility.waitForElementToBeVisible(loginPageModel.getHeaderText()).getText().trim();
   }
 }

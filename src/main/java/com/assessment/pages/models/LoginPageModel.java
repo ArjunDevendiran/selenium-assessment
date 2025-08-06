@@ -21,11 +21,17 @@ public class LoginPageModel {
   @FindBy(id = "password")
   private WebElement passwordField;
 
-  @FindBy(id = "submit")
-  private WebElement submitButton;
+  @FindBy(id = "kc-login")
+  private WebElement loginButton;
 
-  @FindBy(tagName = "body")
-  private WebElement loggedInPageElement;
+  @FindBy(css = "div[role='alert'][class*='success']")
+  private WebElement successToast;
+
+  @FindBy(xpath = "//*[contains(@class, 'error')]")
+  private WebElement emailErrorMessage;
+
+  @FindBy(id = "kc-page-title")
+  private WebElement headerText;
 
   public LoginPageModel(WebDriver driver) {
     PageFactory.initElements(driver, this);
