@@ -64,4 +64,14 @@ public class WaitUtility {
       return null;
     }
   }
+
+  /**
+   * Executes Script Scroll Into View
+   *
+   * @param webEle WebElement
+   */
+  public void scrollElementIntoView(WebElement webEle) {
+    JavascriptExecutor jse = (JavascriptExecutor) driver;
+    jse.executeScript("arguments[0].scrollIntoView();", webEle);
+  }
 }
