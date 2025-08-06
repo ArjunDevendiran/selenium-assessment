@@ -1,25 +1,27 @@
 package hooks;
 
+import com.assessment.utilities.DriverManager;
 import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import com.aventstack.extentreports.cucumber.adapter.*;
-import com.assessment.utilities.ConfigReader;
 
 /**
- * Cucumber hooks for browser setup and teardown.
+ * Cucumber hooks for browser setup and tear down.
  */
 public class Hooks {
-  public static WebDriver driver;
+
+  private final DriverManager driverManager;
+
+  public Hooks(DriverManager driverManager) {
+    this.driverManager = driverManager;
+  }
 
   /**
    * Before each scenario, initialize the browser.
    */
   @Before
   public void beforeScenario() {
-    driver = new ChromeDriver();
+    driverManager.initDriver(); // initializes WebDriver
   }
 
   /**
@@ -30,7 +32,7 @@ public class Hooks {
   @AfterStep
   public void afterStep(io.cucumber.java.Scenario scenario) {
     if (scenario.isFailed()) {
-      byte[] src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+      byte[] src = ((TakesScreenshot) driverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
       scenario.attach(src, "image/png", "failure");
     }
   }
@@ -40,6 +42,6 @@ public class Hooks {
    */
   @After
   public void afterScenario() {
-    driver.quit();
+    driverManager.quitDriver();
   }
 }

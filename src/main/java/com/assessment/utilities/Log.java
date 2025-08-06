@@ -25,4 +25,13 @@ public class Log {
   public static void error(String msg) {
     logger.error(msg);
   }
+
+  /**
+   * Logs a debug-level message.
+   *
+   * @param msg Message to log
+   */
+  public static void debug(String msg) {
+    logger.debug(msg);
+  }
 }
