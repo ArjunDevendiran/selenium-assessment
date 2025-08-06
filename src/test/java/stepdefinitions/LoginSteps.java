@@ -27,7 +27,7 @@ public class LoginSteps {
   @Given("I open the Test environment")
   public void openTestSite(){
     Log.info("Opens the test site based on environment config");
-    loginPageInteraction.openTestSite(ConfigReader.getUrl());
+    loginPageInteraction.openTestSite(ConfigReader.getLoginPageUrl());
   }
 
   /**

@@ -1,7 +1,6 @@
 package com.assessment.pages.models;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
  * Contains only locators with Lombok-generated getters and setters.
  */
 @Getter
-@Setter
 public class LoginPageModel {
 
   @FindBy(id = "username")

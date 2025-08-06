@@ -29,12 +29,22 @@ public class ConfigReader {
   }
 
   /**
-   * Get the application URL based on the current environment.
+   * Get the application Login page URL based on the current environment.
    *
    * @return URL string
    */
-  public static String getUrl() {
+  public static String getLoginPageUrl() {
     String env = get("env");
     return get(env + ".url");
+  }
+
+  /**
+   * Get the application Questionnaire page URL based on the current environment.
+   *
+   * @return URL string
+   */
+  public static String getQuestionnairePageUrl() {
+    String env = get("env");
+    return get(env + ".questionnaire.url");
   }
 }
