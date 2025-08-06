@@ -1,50 +1,93 @@
 package com.assessment.pages.interactions;
 
+import com.assessment.pages.models.LoginPageModel;
+import com.assessment.utilities.DriverManager;
 import com.assessment.utilities.Log;
-import org.openqa.selenium.By;
+import com.assessment.utilities.WaitUtility;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * Interaction Page for the Login page.
  */
 public class LoginPageInteraction {
 
-  WebDriver driver;
-
+  private final WaitUtility waitUtility;
+  private final WebDriver driver;
+  private final LoginPageModel loginPageModel;
   /**
-   * Constructor to initialize WebDriver.
+   * Constructor to initialize dependencies.
    *
-   * @param driver Selenium WebDriver instance
+   * @param driverManager DriverManager instance to interact with the browser
+   * @param waitUtility WaitUtility class to interact with wait methods
    */
-  public LoginPageInteraction(WebDriver driver) {
-    this.driver = driver;
+  public LoginPageInteraction(DriverManager driverManager, WaitUtility waitUtility) {
+    this.driver = driverManager.getDriver();
+    this.waitUtility = waitUtility;
+    this.loginPageModel = new LoginPageModel(driver);
   }
 
-  By username = By.id("username");
-  By password = By.id("password");
-  By submit = By.id("submit");
+  /**
+   * Gets Login page locators
+   *
+   * @param element String
+   * @return eleLocator By
+   */
+  public WebElement getLoginPageElementLocator(String element) {
+    WebElement eleLocator;
+    switch (element.toUpperCase()) {
+      case "USERNAME":
+        eleLocator = loginPageModel.getUsernameField();
+        break;
+      case "PASSWORD":
+        eleLocator = loginPageModel.getPasswordField();
+        break;
+      default:
+        Log.error(String.format("Unknown element requested: %s", element));
+        throw new IllegalArgumentException(String.format("Unknown element requested: %s", element));
+    }
+    return eleLocator;
+  }
 
   /**
    * Open the login page URL.
    *
    * @param url Login page URL
    */
-  public void open(String url) {
+  public void openTestSite(String url) {
+    Log.debug(String.format("Opening URL: %s", url));
     driver.get(url);
-    Log.info("Opened URL: " + url);
+    waitUtility.waitForPageToFinishLoad();
+    Log.info(String.format("Opened URL: %s", url));
   }
 
   /**
-   * Perform login with provided credentials.
+   * Enters the username and password in the login page fields.
    *
-   * @param user Username
-   * @param pass Password
+   * @param data String
+   * @param field String
    */
-  public void login(String user, String pass) {
-    driver.findElement(username).sendKeys(user);
-    driver.findElement(password).sendKeys(pass);
-    driver.findElement(submit).click();
-    Log.info("Clicked login");
+  public void enterDataInExpectedField(String data, String field) {
+    Log.debug(String.format("Entering: %s in %s", data, field));
+    WebElement element = waitUtility.waitForElementToBeClickable(getLoginPageElementLocator(field));
+    element.sendKeys(data);
+    Log.info(String.format("Entered: %s in %s", data, field));
+  }
 
+  /**
+   * Clicks Submit button.
+   */
+  public void clickSubmitButton() {
+    Log.debug("Clicking Submit button");
+    waitUtility.waitForElementToBeClickable(loginPageModel.getSubmitButton()).click();
+    Log.info("Clicked Submit button");
+  }
+
+  /**
+   * Getting logged in success message.
+   */
+  public String getUserLoggedInMessage() {
+    Log.debug("Getting logged in success message");
+    return waitUtility.waitForElementToBeVisible(loginPageModel.getLoggedInPageElement()).getText().trim();
   }
 }

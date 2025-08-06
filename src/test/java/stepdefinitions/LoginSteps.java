@@ -1,44 +1,62 @@
 package stepdefinitions;
+import com.assessment.utilities.Log;
 import io.cucumber.java.en.*;
 import com.assessment.pages.interactions.LoginPageInteraction;
 import com.assessment.utilities.ConfigReader;
-import hooks.Hooks;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 
 /**
  * Step definitions for login feature using Cucumber.
  */
 public class LoginSteps {
-  LoginPageInteraction page = new LoginPageInteraction(Hooks.driver);
+
+  private final LoginPageInteraction loginPageInteraction;
+
+  /**
+   * Constructor to initialize dependencies.
+   *
+   * @param loginPageInteraction  LoginPageInteraction to get access to its methods
+   */
+  public LoginSteps(LoginPageInteraction loginPageInteraction) {
+    this.loginPageInteraction = loginPageInteraction;
+  }
 
   /**
    * Open the login page based on environment config.
    */
-  @Given("I open the login page")
-  public void openLogin(){
-    page.open(ConfigReader.getUrl());
+  @Given("I open the Test environment")
+  public void openTestSite(){
+    loginPageInteraction.openTestSite(ConfigReader.getUrl());
   }
 
   /**
-   * Login with provided username and password.
+   * Enters the username and password in the login page fields.
    *
-   * @param u Username
-   * @param p Password
+   * @param data String
+   * @param field String
    */
-  @When("I login with username {string} and password {string}")
-  public void login(String u, String p){
-    page.login(u,p);
+  @When("I enter {string} in {string} field in the login page")
+  public void enterDataInExpectedField(String data, String field){
+    loginPageInteraction.enterDataInExpectedField(data, field);
   }
 
   /**
-   * Assert that expected text is visible in the page body.
+   * Clicks Submit button.
+   */
+  @When("I click on Submit button in the login page")
+  public void clickSubmitButton(){
+    loginPageInteraction.clickSubmitButton();
+  }
+
+  /**
+   * Assert that expected text is visible in the page.
    *
-   * @param expected Expected result text
+   * @param expectedValue String
    */
   @Then("I should see {string}")
-  public void verify(String expected){
-    String body = Hooks.driver.findElement(By.tagName("body")).getText();
-    Assert.assertTrue(body.contains(expected));
+  public void validateUserLoggedInSuccessfully(String expectedValue) {
+    Log.debug(String.format("Validating logged in page displays expected value %s", expectedValue));
+    String actualValue = loginPageInteraction.getUserLoggedInMessage();
+    Assert.assertTrue(actualValue.contains(expectedValue), "Login success message is not displayed");
   }
 }

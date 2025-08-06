@@ -8,7 +8,7 @@ import java.util.Properties;
  * Supports dynamic environment-based URLs like qa, dev, and stage.
  */
 public class ConfigReader {
-  private static Properties prop = new Properties();
+  private static final Properties prop = new Properties();
 
   static {
     try (InputStream in = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties")) {
