@@ -12,6 +12,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <cucumber.features>src/test/resources/features</cucumber.features>
     </properties>
 
     <dependencies>
@@ -87,6 +88,18 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/TestRunner.java</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <cucumber.features>${cucumber.features}</cucumber.features>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>

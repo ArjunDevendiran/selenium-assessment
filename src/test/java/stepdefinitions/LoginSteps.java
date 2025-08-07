@@ -1,5 +1,6 @@
 package stepdefinitions;
 import com.assessment.utilities.Log;
+import com.assessment.utilities.PropertiesUtility;
 import io.cucumber.java.en.*;
 import com.assessment.pages.interactions.LoginPageInteraction;
 import com.assessment.utilities.ConfigReader;
@@ -33,12 +34,20 @@ public class LoginSteps {
   /**
    * Enters the username and password in the login page fields.
    *
-   * @param data String
+   * @param ignoredUsernamePlaceholder String It is ignored as it is used for reporting purposes only
    * @param field String
+   * @param propertiesFile String
    */
-  @When("I enter {string} in {string} field in the login page")
-  public void enterDataInExpectedField(String data, String field){
-    Log.info(String.format("Enters the username: %s and password: %s in the login page fields", data, field));
+  @When("I enter {string} in {string} field in the login page from {string}")
+  public void enterDataInExpectedField(String ignoredUsernamePlaceholder, String field, String propertiesFile) {
+    Log.info(String.format("Enters the data in the field: %s", field));
+    String data = "";
+    // Get actual credentials from properties file
+    if(field.equalsIgnoreCase("username")){
+      data = PropertiesUtility.getProperty(propertiesFile, "username");
+    } else if(field.equalsIgnoreCase("password")){
+      data = PropertiesUtility.getProperty(propertiesFile, "password");
+    }
     loginPageInteraction.enterDataInExpectedField(data, field);
   }
 
@@ -60,20 +69,24 @@ public class LoginSteps {
   public void validateUserLoggedInSuccessfully(String expectedValue) {
     Log.info(String.format("Validating logged in page displays expected success toast message: %s", expectedValue));
     String actualValue = loginPageInteraction.getSuccessToastMessage();
-    Assert.assertTrue(actualValue.contains(expectedValue), "Login success message is not displayed");
+    Assert.assertTrue(actualValue.contains(expectedValue), "Login success message is not as displayed");
   }
 
   /**
    * Login steps with username and password.
    *
-   * @param username String
-   * @param password String
+   * @param ignoredUsernamePlaceholder String It is ignored as it is used for reporting purposes only
+   * @param ignoredPasswordPlaceholder String It is ignored as it is used for reporting purposes only
+   * @param propertiesFile String
    */
-  @When("I login with {string} and {string}")
-  public void loginToSite(String username, String password) {
-    Log.info(String.format("Logins with username: %s and password: %s", username, password));
-    enterDataInExpectedField(username, "username");
-    enterDataInExpectedField(password, "password");
+  @When("I login with username {string} and password {string} from {string}")
+  public void loginToSite(String ignoredUsernamePlaceholder, String ignoredPasswordPlaceholder, String propertiesFile) {
+    // Get actual credentials from properties file
+    String username = PropertiesUtility.getProperty(propertiesFile, "username");
+    String password = PropertiesUtility.getProperty(propertiesFile, "password");
+    Log.info(String.format("Logins with username: %s and password: %s fetched from file: %s", username, "****", propertiesFile));
+    enterDataInExpectedField(username, "username", propertiesFile);
+    enterDataInExpectedField(password, "password", propertiesFile);
     clickSubmitButton();
   }
 
