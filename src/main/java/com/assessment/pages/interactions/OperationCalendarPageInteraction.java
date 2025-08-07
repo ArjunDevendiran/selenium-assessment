@@ -17,6 +17,7 @@ public class OperationCalendarPageInteraction {
   private final WaitUtility waitUtility;
   private final WebDriver driver;
   private final OperationCalendarPageModel operationCalendarPageModel;
+
   /**
    * Constructor to initialize dependencies.
    *

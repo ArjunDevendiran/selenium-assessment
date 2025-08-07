@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--To run the xml cmd - mvn test "-DsuiteXmlFile=testng.xml" "-Dcucumber.filter.tags=@TagName" -->
+<suite name="Cucumber Tests" verbose="1" parallel="false">
+    <test name="Login Feature Tests with Tags">
+        <parameter name="cucumber.filter.tags" value="@LoginTest-1"/>
+        <classes>
+            <class name="io.cucumber.testng.TestNGCucumberRunner"/>
+        </classes>
+    </test>
+</suite>

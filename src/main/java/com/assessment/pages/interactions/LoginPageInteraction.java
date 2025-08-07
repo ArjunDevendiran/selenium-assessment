@@ -83,10 +83,9 @@ public class LoginPageInteraction {
    * @param field String
    */
   public void enterDataInExpectedField(String data, String field) {
-    Log.debug(String.format("Entering: %s in %s", data, field));
+    Log.debug(String.format("Entering data in the field: %s", field));
     WebElement element = waitUtility.waitForElementToBeClickable(getLoginPageElementLocator(field));
     element.sendKeys(data);
-    Log.info(String.format("Entered: %s in %s", data, field));
   }
 
   /**
@@ -95,7 +94,6 @@ public class LoginPageInteraction {
   public void clickSubmitButton() {
     Log.debug("Clicking Submit button");
     waitUtility.waitForElementToBeClickable(loginPageModel.getLoginButton()).click();
-    Log.info("Clicked Submit button");
   }
 
   /**

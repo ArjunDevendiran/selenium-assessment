@@ -1,34 +1,40 @@
 @LoginFlow
 Feature: Login Feature
 
-  @TICKET-1 @LoginFlow @Regression @FE
+  @LoginTest-1 @LoginFlow @Regression @FE
   Scenario Outline: Validate User is able to Login successfully
     Given I open the Test environment
-    When I enter "<username>" in "username" field in the login page
-    And I enter "<password>" in "password" field in the login page
+    When I enter "<username>" in "username" field in the login page from "<properties_file>"
+    And I enter "<password>" in "password" field in the login page from "<properties_file>"
     And I click on Submit button in the login page
     Then I should see "<result>" toast
     Examples:
-      | username        | password | result  |
-      | test@gmail.com  | test123  | success |
+      | properties_file             | username          | password       | result  |
+      | login.properties | ${login.username} | ${login.password} | success |
 
-  @TICKET-2 @LoginFlow @Regression @FE
-  Scenario: Validate error message when Incorrect Email Format is entered
+  @LoginTest-2 @LoginFlow @Regression @FE
+  Scenario Outline: Validate error message when Incorrect Email Format is entered
     Given I open the Test environment
-    When I enter "testgmailcom" in "username" field in the login page
-    And I enter "test123" in "password" field in the login page
+    When I enter "<username>" in "username" field in the login page from "<properties_file>"
+    And I enter "<password>" in "password" field in the login page from "<properties_file>"
     And I click on Submit button in the login page
-    Then I should see "enter correct email" error message
+    Then I should see "<result>" error message
+    Examples:
+      | properties_file             | username          | password       | result  |
+      | login.properties | ${login.username} | ${login.password} | enter correct email |
 
-  @TICKET-3 @LoginFlow @Regression @FE
-  Scenario: Validate error message when username (not registered) is entered
+  @LoginTest-3 @LoginFlow @Regression @FE
+  Scenario Outline: Validate error message when username (not registered) is entered
     Given I open the Test environment
-    When I enter "123@gmail.com" in "username" field in the login page
-    And I enter "test123" in "password" field in the login page
+    When I enter "<username>" in "username" field in the login page from "<properties_file>"
+    And I enter "<password>" in "password" field in the login page from "<properties_file>"
     And I click on Submit button in the login page
-    Then I should see "invalid email" error message
+    Then I should see "<result>" error message
+    Examples:
+      | properties_file             | username          | password       | result  |
+      | login.properties | ${login.username} | ${login.password} | invalid email |
 
-  @TICKET-4 @LoginFlow @Regression @FE
+  @LoginTest-4 @LoginFlow @Regression @FE
   Scenario: Validate Login page
     Given I open the Test environment
     Then I should see page title "Log in to VMD-SERAPIS-01"
@@ -37,13 +43,16 @@ Feature: Login Feature
     And I should see "Password" field
     And I should see "Login" button
 
-  @TICKET-5 @LoginFlow @Regression @FE
+  @LoginTest-5 @LoginFlow @Regression @FE
   Scenario: Validate Login button is disabled when username and password field are empty
     Given I open the Test environment
     Then I should see "Login" button is enabled false
 
-  @TICKET-6 @LoginFlow @Regression @FE
-  Scenario: Validate password is masked when password is entered
+  @LoginTest-6 @LoginFlow @Regression @FE
+  Scenario Outline: Validate password is masked when password is entered
     Given I open the Test environment
-    When I enter "test123" in "password" field in the login page
+    And I enter "<password>" in "password" field in the login page from "<properties_file>"
     Then I should see "Password" field is masked
+    Examples:
+      | properties_file             | password       |
+      | login.properties | ${login.password} |

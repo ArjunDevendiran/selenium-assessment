@@ -1,6 +1,8 @@
 package hooks;
 
 import com.assessment.utilities.DriverManager;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -30,11 +32,17 @@ public class Hooks {
    * @param scenario Cucumber scenario
    */
   @AfterStep
-  public void afterStep(io.cucumber.java.Scenario scenario) {
-    if (scenario.isFailed()) {
-      byte[] src = ((TakesScreenshot) driverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
-      scenario.attach(src, "image/png", "failure");
-    }
+  public void afterStep(Scenario scenario) {if (scenario.isFailed()) {
+    String screenshotBase64 = ((TakesScreenshot)driverManager.getDriver())
+            .getScreenshotAs(OutputType.BASE64);
+
+    // 1. For ExtentReports
+    ExtentCucumberAdapter.getCurrentStep().fail(
+            MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
+
+    // 2. For Cucumber HTML report
+    scenario.attach(screenshotBase64, "image/png", "Failure");
+  }
   }
 
   /**
