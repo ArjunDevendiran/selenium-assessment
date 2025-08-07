@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 /**
  * Model class for the Login page elements.
- * Contains only locators with Lombok-generated getters and setters.
+ * Contains only locators with Lombok-generated getters
  */
 @Getter
 public class LoginPageModel {
