@@ -18,7 +18,7 @@ This is a Selenium automation framework built using Java, Maven, and Cucumber wi
 
 ---
 
-## Project Structure (Simplified)
+## Project Structure
 
 - `src/main/java` – contains main code such as:
   - **utilities** – WebDriver setup, driver manager, waits, and logging
