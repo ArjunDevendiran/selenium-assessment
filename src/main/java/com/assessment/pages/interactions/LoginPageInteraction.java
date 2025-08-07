@@ -53,13 +53,25 @@ public class LoginPageInteraction {
   }
 
   /**
-   * Open the login page URL.
+   * Open the page URL.
    *
-   * @param url Login page URL
+   * @param url String page URL
    */
   public void openTestSite(String url) {
     Log.debug(String.format("Opening URL: %s", url));
     driver.get(url);
+    waitUtility.waitForPageToFinishLoad();
+    Log.info(String.format("Opened URL: %s", url));
+  }
+
+  /**
+   * Open the specified page URL.
+   *
+   * @param url String page URL
+   */
+  public void navigateToPage(String url) {
+    Log.debug(String.format("Opening URL: %s", url));
+    driver.navigate().to(url);
     waitUtility.waitForPageToFinishLoad();
     Log.info(String.format("Opened URL: %s", url));
   }

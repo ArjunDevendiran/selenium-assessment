@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Interaction Page for the Login page.
+ * Interaction Page for the Questionnaire page.
  */
 public class QuestionnairePageInteraction {
 
@@ -20,6 +20,7 @@ public class QuestionnairePageInteraction {
   private final WebDriver driver;
   private final QuestionnairePageModel questionnairePageModel;
   Random random = new Random();
+
   /**
    * Constructor to initialize dependencies.
    *

@@ -34,11 +34,13 @@ public class QuestionnaireSteps {
 
   /**
    * Opens the test site based on environment config.
+   *
+   * @param pageName String Name of the page to open
    */
-  @Given("I open the Questionnaire page")
-  public void openTestSite(){
+  @Given("I open the {string} page")
+  public void openTestSite(String pageName){
     Log.info("Opens the test site based on environment config");
-    loginPageInteraction.openTestSite(ConfigReader.getQuestionnairePageUrl());
+    loginPageInteraction.navigateToPage(ConfigReader.getPageUrl(pageName));
   }
 
   /**

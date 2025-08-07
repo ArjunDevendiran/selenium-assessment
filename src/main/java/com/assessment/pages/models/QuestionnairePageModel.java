@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Model class for the Questionnaire page elements.
- * Contains only locators with Lombok-generated getters and setters.
+ * Contains only locators with Lombok-generated getters
  */
 @Getter
 public class QuestionnairePageModel {

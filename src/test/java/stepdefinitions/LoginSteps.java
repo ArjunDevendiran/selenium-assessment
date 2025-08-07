@@ -27,7 +27,7 @@ public class LoginSteps {
   @Given("I open the Test environment")
   public void openTestSite(){
     Log.info("Opens the test site based on environment config");
-    loginPageInteraction.openTestSite(ConfigReader.getLoginPageUrl());
+    loginPageInteraction.openTestSite(ConfigReader.getPageUrl());
   }
 
   /**
@@ -62,6 +62,22 @@ public class LoginSteps {
     String actualValue = loginPageInteraction.getSuccessToastMessage();
     Assert.assertTrue(actualValue.contains(expectedValue), "Login success message is not displayed");
   }
+
+  /**
+   * Login steps with username and password.
+   *
+   * @param username String
+   * @param password String
+   */
+  @When("I login with {string} and {string}")
+  public void loginToSite(String username, String password) {
+    Log.info(String.format("Logins with username: %s and password: %s", username, password));
+    enterDataInExpectedField(username, "username");
+    enterDataInExpectedField(password, "password");
+    clickSubmitButton();
+  }
+
+
 
   /**
    * Assert that expected error text is visible in the page.
