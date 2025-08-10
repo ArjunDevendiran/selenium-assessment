@@ -1,6 +1,6 @@
 # Selenium Assessment Automation Framework
 
-This is a Selenium automation framework built using Java, Maven, and Cucumber with TestNG and ExtentReports.
+This is a Selenium automation framework built using Java, Maven, Selenium, and Cucumber with TestNG and ExtentReports.
 
 ---
 
