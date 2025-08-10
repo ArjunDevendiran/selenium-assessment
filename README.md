@@ -34,7 +34,7 @@ This is a Selenium automation framework built using Java, Maven, Selenium, and C
   - **features** – all `.feature` files
   - **config** – environment properties etc.
 
-- `test-output` – generated reports and screenshots
+- `test-output` – contains generated reports and screenshots
 
 ---
 
@@ -52,7 +52,7 @@ mvn test "-Dcucumber.filter.tags=@FE"
 
 ### Run multiple feature files
 ```bash
-mvn test "-Dcucumber.features=src/test/resources/features/login.feature,src/test/resources/features/checkout.feature"
+mvn test "-Dcucumber.features=src/test/resources/features/login.feature,src/test/resources/features/operationCalendar.feature"
 ```
 
 ### Run a specific tagged test from a specific feature file
